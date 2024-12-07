@@ -6,6 +6,22 @@
 
 
 import streamlit as st
+import time 
+# title
+st.title("Video KYC")
 
-st.write("hello")
-st.write("world")
+form = st.form("my_form")
+img_upload = form.file_uploader("Upload Photo ID",type=['jpeg','png','jpg'],accept_multiple_files=False)
+video_upload = form.file_uploader("Upload short video", type=['mp4','mkv'],accept_multiple_files=False)
+submit = form.form_submit_button("Upload")
+
+# validating a form 
+
+if submit:
+    if video_upload is None or img_upload is None:
+         alert = st.warning("Please upload a file 💀💀")
+         time.sleep(2)
+         alert.empty()
+    else:
+        st.write("in else")
+        st.spinner("uploading........")
