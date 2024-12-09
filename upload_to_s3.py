@@ -4,7 +4,9 @@ import streamlit as st
 from dotenv import load_dotenv
 import os
 import boto3
-import time 
+import time,datetime
+from datetime import datetime
+import time
 #---------------------------------------------------------------------
 #AWS Cred
 #  Aws cred
@@ -25,29 +27,39 @@ s3 = boto3.client('s3',
 
 # function for reading file and uploading to S3 bucket
 def upload_img_video_to_s3(img_upload,video_upload):
-    
     img = img_upload.name
+    # splitting the image name 
+
+    img_name = img.split(".")
     video = video_upload.name
+
     # reading the image and video 
+    
     with open(img,"wb") as f:
         f.write(img_upload.getvalue())
     with open(video,"wb") as f:
         f.write(video_upload.getvalue())
+
     # storing the variable in list
     file_name = [img,video]
+    
+    # fetching current date time-------------------------
+    date_time = datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
+    # creating folder ---------------------------
+    folder =f'{img_name[0]}-{date_time}'
+    s3.put_object(Bucket=bucket_name, Key=(folder+'/'))
+
     # uploading file into s3 bucket
     for file in file_name:
-        upload = s3.upload_file(file,bucket_name,file)
-    alert= st.success(f'file uploaded succesfully to {bucket_name}')
+        upload = s3.upload_file(file,bucket_name,f'{folder}/{file}')
+    alert= st.success(f'file uploaded succesfully')
     time.sleep(2)
     alert.empty()
+    
     # Removing file from local system
     for del_file in file_name:
         local_path_dir = os.path.join(os.getcwd(),del_file)
         os.remove(local_path_dir)
-    alert= st.success(f'file remove from locale')
-    time.sleep(2)
-    alert.empty()
     
 
     

@@ -7,7 +7,7 @@
 
 import streamlit as st
 import time 
-import upload_to_s3 as up
+import upload_to_s3 as upload
 # title
 st.title("Video KYC")
 
@@ -24,5 +24,8 @@ if submit:
          time.sleep(2)
          alert.empty()
     else:
-        st.spinner("uploading........")
-        up.upload_img_video_to_s3(img_upload,video_upload)
+        with st.spinner('Uploading......'):
+            time.sleep(2)
+        upload.upload_img_video_to_s3(img_upload,video_upload)
+        
+        st.snow()
