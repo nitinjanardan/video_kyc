@@ -2,6 +2,14 @@
 
 
 1. Create a frontend where user will upload a short video and Photo ID
+2. Write a function for uploading both files to S3 as soon as user clicks Upload/Submit
+3. Write a function to read the video frame by frame and detect blinks and lip movement
+
+
+links:
+https://youtu.be/SIZNf_Ydplg?si=PbusvbWdRqjRzBSX
+https://zoomout.medium.com/how-to-use-facial-landmarks-obtained-from-dlib-b82129e5b352
+https://medium.com/@RiwajNeupane/facial-landmark-detection-a6b3e29eac5b
 '''
 
 
@@ -27,5 +35,6 @@ if submit:
         with st.spinner('Uploading......'):
             time.sleep(2)
         upload.upload_img_video_to_s3(img_upload,video_upload)
+        upload.detect_blinks_in_video()
         
         st.snow()
