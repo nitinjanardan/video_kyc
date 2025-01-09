@@ -1,3 +1,5 @@
 .env
 __pycache__
 test.ipynb
+dlib-19.24.1-cp311-cp311-win_amd64.whl
+shape_predictor_68_face_landmarks.dat
